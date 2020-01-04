@@ -1,1 +1,1 @@
-This is a simple program that converts roman numerals to arabic numerals.
+This is a simple program that converts roman numerals to arabic numerals to practice Kotlin; currently it does not work with roman numerals that have an odd amount of chars.
