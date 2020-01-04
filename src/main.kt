@@ -1,17 +1,34 @@
-fun main(args: Array<String>){
-    val romanNum = "II".toUpperCase()
-    var total = 0
-    if(romanNum.length > 1) {
-        for (i in 1..romanNum.length - 1 step 2) {
-            val currentChar: Int = parseRoman(romanNum[i])
-            val prevChar: Int = parseRoman(romanNum[i - 1])
-            if (currentChar < prevChar || currentChar == prevChar) total += (currentChar + prevChar) else total += (currentChar - prevChar)
+fun main(){
+    var romanNum: String
+    var nums: List<Int?>
+    var total: Int = 0
+    do {
+        romanNum = readLine()!!.toUpperCase()
+        nums = romanNum.map {parseRoman(it)}
+    } while(checkNulls(nums) || nums.isEmpty())
+
+    val numsFilt = nums.filterNotNull()
+
+    if(numsFilt.size == 1) total = numsFilt[0] else{
+        for(i in 1..nums.size-1 step 2){
+            val currentNum = numsFilt[i]
+            val prevNum = numsFilt[i-1]
+            total += if(currentNum <= prevNum) (currentNum+prevNum) else (currentNum-prevNum)
         }
-    } else total += parseRoman(romanNum[0])
-    print(total)
+    }
+
+    println(total)
+
 }
 
-fun parseRoman(roman: Char): Int{
+fun checkNulls(list: List<Int?>): Boolean{
+    for(element in list){
+        if(element == null) return true
+    }
+    return false
+}
+
+fun parseRoman(roman: Char): Int?{
     when(roman){
         'I' -> return 1
         'V' -> return 5
@@ -20,6 +37,6 @@ fun parseRoman(roman: Char): Int{
         'C' -> return 100
         'D' -> return 500
         'M' -> return 1000
-        else -> return 0
+        else -> return null
     }
 }
